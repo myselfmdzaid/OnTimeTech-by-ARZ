@@ -1093,7 +1093,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const bgmAudio = document.getElementById('bgm');
-            bgmAudio.volume = 2; // 200% volume
+            bgmAudio.volume = 1.0; // Maximum volume (100%)
             bgmAudio.play().catch(function(error) {
                 console.log('Autoplay was prevented:', error);
             });
