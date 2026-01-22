@@ -1086,6 +1086,20 @@
     </style>
 </head>
 <body>
+    <!-- Background Audio -->
+    <audio id="bgm" autoplay loop>
+        <source src="backgroundAudio/Die With A Smile (Instrumental) bgm.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bgmAudio = document.getElementById('bgm');
+            bgmAudio.volume = 2; // 200% volume
+            bgmAudio.play().catch(function(error) {
+                console.log('Autoplay was prevented:', error);
+            });
+        });
+    </script>
+
     <!-- Background Shapes -->
     <div class="bg-shapes">
         <div class="shape"></div>
