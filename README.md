@@ -1,4 +1,4 @@
-# 📚 OnTimeTech by ARZ
+# 📚 OnTimeTech by ARZ - https://myselfmdzaid.github.io/OnTimeTech-by-ARZ
 
 > **"You Handle Life. We Handle Submissions."**
 
