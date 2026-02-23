@@ -20,6 +20,31 @@
             --text-white: #ffffff;
             --text-gray: #a0a0b0;
             --neon-glow: 0 0 20px rgba(0, 240, 255, 0.5);
+            --header-bg: rgba(10, 10, 15, 0.9);
+            --input-bg: rgba(0, 240, 255, 0.05);
+            --input-border: rgba(0, 240, 255, 0.2);
+            --mobile-menu-bg: rgba(26, 26, 36, 0.98);
+        }
+
+        /* ===== LIGHT THEME ===== */
+        [data-theme="light"] {
+            --dark-bg: #f0f4ff;
+            --card-bg: #ffffff;
+            --text-white: #0d0d1a;
+            --text-gray: #555577;
+            --neon-glow: 0 0 20px rgba(0, 180, 220, 0.4);
+            --header-bg: rgba(240, 244, 255, 0.92);
+            --input-bg: rgba(0, 180, 220, 0.06);
+            --input-border: rgba(0, 180, 220, 0.25);
+            --mobile-menu-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        [data-theme="light"] .bg-shapes .shape {
+            opacity: 0.06;
+        }
+
+        [data-theme="light"] header {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
         }
 
         body {
@@ -103,10 +128,11 @@
             top: 0;
             width: 100%;
             padding: 1.5rem 5%;
-            background: rgba(10, 10, 15, 0.9);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             z-index: 1000;
             border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            transition: background 0.3s ease;
         }
 
         nav {
@@ -212,6 +238,59 @@
             transition: all 0.3s ease;
         }
 
+        /* ===== THEME TOGGLE — DESKTOP ===== */
+        .theme-switcher {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 50px;
+            padding: 4px;
+            gap: 2px;
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px 9px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            transition: all 0.25s ease;
+            color: var(--text-gray);
+            line-height: 1;
+        }
+
+        .theme-btn.active {
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        .theme-btn:hover:not(.active) {
+            background: rgba(0, 240, 255, 0.12);
+            color: var(--text-white);
+        }
+
+        /* ===== THEME TOGGLE — MOBILE (inside nav menu) ===== */
+        .mobile-theme-row {
+            display: none;
+            flex-direction: row;
+            gap: 6px;
+            justify-content: center;
+            padding: 0.6rem 0 0.2rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.15);
+            margin-top: 0.5rem;
+        }
+
+        .mobile-theme-row .theme-btn {
+            flex: 1;
+            text-align: center;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            font-size: 0.8rem;
+            padding: 6px 4px;
+        }
+
         @media (max-width: 768px) {
             .logo img {
                 height: 50px;
@@ -222,10 +301,10 @@
                 top: 80px;
                 right: -100%;
                 flex-direction: column;
-                background: rgba(26, 26, 36, 0.98);
+                background: var(--mobile-menu-bg);
                 padding: 2rem;
                 border-radius: 20px 0 0 20px;
-                transition: right 0.3s ease;
+                transition: right 0.3s ease, background 0.3s ease;
                 box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
             }
 
@@ -234,6 +313,16 @@
             }
 
             .mobile-menu-btn {
+                display: flex;
+            }
+
+            /* Hide desktop switcher on mobile */
+            .theme-switcher {
+                display: none;
+            }
+
+            /* Show mobile row inside nav-links */
+            .mobile-theme-row {
                 display: flex;
             }
         }
@@ -815,8 +904,8 @@
         .form-group textarea {
             width: 100%;
             padding: 1rem;
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid rgba(0, 240, 255, 0.2);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
             border-radius: 10px;
             color: var(--text-white);
             font-size: 1rem;
@@ -1185,7 +1274,21 @@
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#process">How It Works</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <!-- Mobile-only theme row (3 lines inside the slide-out menu) -->
+                <li class="mobile-theme-row">
+                    <button class="theme-btn" id="m-light" onclick="setTheme('light')" title="Light">☀️ Light</button>
+                    <button class="theme-btn active" id="m-system" onclick="setTheme('system')" title="System">🖥️
+                        System</button>
+                    <button class="theme-btn" id="m-dark" onclick="setTheme('dark')" title="Dark">🌙 Dark</button>
+                </li>
             </ul>
+            <!-- Desktop theme switcher in navbar -->
+            <div class="theme-switcher" id="desktopThemeSwitcher">
+                <button class="theme-btn" id="d-light" onclick="setTheme('light')" title="Light theme">☀️</button>
+                <button class="theme-btn active" id="d-system" onclick="setTheme('system')"
+                    title="System theme">🖥️</button>
+                <button class="theme-btn" id="d-dark" onclick="setTheme('dark')" title="Dark theme">🌙</button>
+            </div>
             <a href="#contact" class="cta-btn">GET STARTED</a>
             <div class="mobile-menu-btn">
                 <span></span>
@@ -1694,7 +1797,46 @@
     </div>
 
     <script>
-        // Mobile Menu
+        /* ===================================================
+           THEME SYSTEM
+           Modes: 'light' | 'dark' | 'system'
+           Default: 'system' (reads prefers-color-scheme)
+        =================================================== */
+        function applyTheme(mode) {
+            const root = document.documentElement;
+            let resolved = mode;
+            if (mode === 'system') {
+                resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+            root.setAttribute('data-theme', resolved);
+
+            // Update all 6 buttons (3 desktop + 3 mobile)
+            ['light', 'system', 'dark'].forEach(m => {
+                document.getElementById('d-' + m)?.classList.toggle('active', m === mode);
+                document.getElementById('m-' + m)?.classList.toggle('active', m === mode);
+            });
+        }
+
+        function setTheme(mode) {
+            localStorage.setItem('ott-theme', mode);
+            applyTheme(mode);
+        }
+
+        // Boot: load saved preference or default to 'system'
+        (function () {
+            const saved = localStorage.getItem('ott-theme') || 'system';
+            applyTheme(saved);
+
+            // Re-apply when OS theme changes (only relevant in system mode)
+            window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', () => {
+                const current = localStorage.getItem('ott-theme') || 'system';
+                if (current === 'system') applyTheme('system');
+            });
+        })();
+
+        /* ===================================================
+           MOBILE MENU
+        =================================================== */
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
 
@@ -1702,7 +1844,7 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close mobile menu on link click
+        // Close mobile menu on nav link click (not on theme buttons)
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
